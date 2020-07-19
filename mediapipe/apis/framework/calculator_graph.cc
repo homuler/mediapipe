@@ -13,46 +13,43 @@ void debug(std::string text) {
   file.close();
 }
 
-MpCalculatorGraphConfig ParseMpCalculatorGraphConfigOrDie(const char* input) {
-  auto config = mediapipe::ParseTextProtoOrDie<mediapipe::CalculatorGraphConfig>(input);
+MpCalculatorGraphConfig* ParseMpCalculatorGraphConfigOrDie(const char* input) {
+  auto config = new mediapipe::CalculatorGraphConfig { mediapipe::ParseTextProtoOrDie<mediapipe::CalculatorGraphConfig>(input) };
 
-  return new mediapipe::CalculatorGraphConfig { std::move(config) };
+  return new MpCalculatorGraphConfig { std::unique_ptr<mediapipe::CalculatorGraphConfig> { std::move(config) } };
 }
 
-MpCalculatorGraph MpCalculatorGraphCreate() {
-  return new mediapipe::CalculatorGraph();
+MpCalculatorGraph* MpCalculatorGraphCreate() {
+  auto calculator_graph = std::unique_ptr<mediapipe::CalculatorGraph> { new mediapipe::CalculatorGraph() };
+
+  return new MpCalculatorGraph { std::move(calculator_graph) };
 }
 
-void MpCalculatorGraphDestroy(MpCalculatorGraph graph) {
+void MpCalculatorGraphDestroy(MpCalculatorGraph* graph) {
   delete graph;
 }
 
-MpStatus MpCalculatorGraphInitialize(MpCalculatorGraph graph, MpCalculatorGraphConfig input_config) {
-  auto calculator_graph = static_cast<mediapipe::CalculatorGraph*>(graph);
-  auto graph_config = static_cast<mediapipe::CalculatorGraphConfig*>(input_config);
-  auto status = calculator_graph->Initialize(*graph_config);
+MpStatus MpCalculatorGraphInitialize(MpCalculatorGraph* graph, MpCalculatorGraphConfig* input_config) {
+  auto status = graph->impl->Initialize(*input_config->impl);
 
   return new mediapipe::Status { std::move(status) };
 }
 
-MpStatus MpCalculatorGraphStartRun(MpCalculatorGraph mp_graph, MpSidePacket* mp_side_packet) {
-  auto graph = static_cast<mediapipe::CalculatorGraph*>(mp_graph);
+MpStatus MpCalculatorGraphStartRun(MpCalculatorGraph* graph, MpSidePacket* mp_side_packet) {
   auto side_packet = mp_side_packet->impl;
-  auto status = graph->StartRun(*side_packet);
+  auto status = graph->impl->StartRun(*side_packet);
 
   return new mediapipe::Status { std::move(status) };
 }
 
-MpStatus MpCalculatorGraphWaitUntilDone(MpCalculatorGraph mp_calculator_graph) {
-  auto graph = static_cast<mediapipe::CalculatorGraph*>(mp_calculator_graph);
-  auto status = graph->WaitUntilDone();
+MpStatus MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph) {
+  auto status = graph->impl->WaitUntilDone();
 
   return new mediapipe::Status { std::move(status) };
 }
 
-MpStatusOrPoller MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph graph, const char* name) {
-  auto calculator_graph = static_cast<mediapipe::CalculatorGraph*>(graph);
-  auto status_or_value = calculator_graph->AddOutputStreamPoller(std::string(name));
+MpStatusOrPoller MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* graph, const char* name) {
+  auto status_or_value = graph->impl->AddOutputStreamPoller(std::string(name));
 
   return new mediapipe::StatusOrPoller { std::move(status_or_value) };
 }
@@ -64,17 +61,15 @@ bool MpOutputStreamPollerNext(MpOutputStreamPoller mp_poller, MpPacket mp_packet
   return poller->Next(packet);
 }
 
-MpStatus MpCalculatorGraphAddStringPacketToInputStream(MpCalculatorGraph graph, const char* name, const char* value, int timestamp) {
-  auto calculator_graph = static_cast<mediapipe::CalculatorGraph*>(graph);
+MpStatus MpCalculatorGraphAddStringPacketToInputStream(MpCalculatorGraph* graph, const char* name, const char* value, int timestamp) {
   auto packet = mediapipe::MakePacket<std::string>(std::string(value)).At(mediapipe::Timestamp(timestamp));
-  auto status = calculator_graph->AddPacketToInputStream(std::string(name), packet);
+  auto status = graph->impl->AddPacketToInputStream(std::string(name), packet);
 
   return new mediapipe::Status { std::move(status) };
 }
 
-MpStatus MpCalculatorGraphCloseInputStream(MpCalculatorGraph graph, const char* name) {
-  auto calculator_graph = static_cast<mediapipe::CalculatorGraph*>(graph);
-  auto status = calculator_graph->CloseInputStream(std::string(name));
+MpStatus MpCalculatorGraphCloseInputStream(MpCalculatorGraph* graph, const char* name) {
+  auto status = graph->impl->CloseInputStream(std::string(name));
 
   return new mediapipe::Status { std::move(status) };
 }
