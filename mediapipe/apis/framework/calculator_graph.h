@@ -22,20 +22,21 @@ MP_CAPI_EXPORT extern MpCalculatorGraphConfig* ParseMpCalculatorGraphConfig(cons
 MP_CAPI_EXPORT extern void MpCalculatorGraphConfigDestroy(MpCalculatorGraphConfig* config);
 
 MP_CAPI_EXPORT extern MpCalculatorGraph* MpCalculatorGraphCreate();
+MP_CAPI_EXPORT extern void MpCalculatorGraphDestroy(MpCalculatorGraph* graph);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphInitialize(MpCalculatorGraph* graph, MpCalculatorGraphConfig* input_config);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphStartRun(MpCalculatorGraph* graph, MpSidePacket* side_packet);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph);
-MP_CAPI_EXPORT extern void MpCalculatorGraphDestroy(MpCalculatorGraph* graph);
 
 /** mediapipe::OutputStreamPoller API */
 MP_CAPI_EXPORT extern MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* graph, const char* name);
-MP_CAPI_EXPORT extern bool MpOutputStreamPollerNext(MpOutputStreamPoller poller, MpPacket packet);
+MP_CAPI_EXPORT extern bool MpOutputStreamPollerNext(MpOutputStreamPoller poller, MpPacket* packet);
 
 /** mediapipe::InputStream API */
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphAddStringPacketToInputStream(MpCalculatorGraph* graph, const char* name, const char* packet, int timestamp);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphCloseInputStream(MpCalculatorGraph* graph, const char* name);
 
 /** mediapipe::StatusOrPoller API */
+MP_CAPI_EXPORT extern void MpStatusOrPollerDestroy(MpStatusOrPoller* status_or_poller);
 MP_CAPI_EXPORT extern bool MpStatusOrPollerOk(MpStatusOrPoller* status_or_poller);
 MP_CAPI_EXPORT extern MpOutputStreamPoller MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller);
 

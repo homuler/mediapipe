@@ -1,19 +1,21 @@
-#include <string>
 #include "mediapipe/apis/framework/packet.h"
 
-MpPacket MpPacketCreate() {
-  return new mediapipe::Packet {};
+MpPacket* MpPacketCreate() {
+  return new MpPacket();
 }
 
-MpPacket MpMakeStringPacketAt(const char* string, int timestamp) {
+void MpPacketDestroy(MpPacket* packet) {
+  delete packet;
+}
+
+MpPacket* MpMakeStringPacketAt(const char* string, int timestamp) {
   auto packet = mediapipe::MakePacket<std::string>(std::string(string)).At(mediapipe::Timestamp(timestamp));
 
-  return std::move(&packet);
+  return new MpPacket { std::move(packet) };
 }
 
-const char* MpPacketGetString(MpPacket mp_packet) {
-  auto packet = static_cast<mediapipe::Packet*>(mp_packet);
-  auto text = packet->Get<std::string>();
+const char* MpPacketGetString(MpPacket* packet) {
+  auto text = packet->impl->Get<std::string>();
 
   char* result = new char[text.size()];
   strcpy(result, text.c_str());
@@ -22,14 +24,13 @@ const char* MpPacketGetString(MpPacket mp_packet) {
 }
 
 MpSidePacket* MpSidePacketCreate() {
-  auto map = std::make_shared<std::map<std::string, mediapipe::Packet>>();
-
-  return new MpSidePacket { map };
+  return new MpSidePacket();
 }
 
-void MpSidePacketInsert(MpSidePacket* mp_side_packet, const char* key, MpPacket mp_packet) {
-  auto packet = static_cast<mediapipe::Packet*>(mp_packet);
-  std::pair<std::string, mediapipe::Packet> pair(std::string(key), *packet);
+void MpSidePacketDestroy(MpSidePacket* side_packet) {
+  delete side_packet;
+}
 
-  mp_side_packet->impl->emplace(std::string(key), *packet);
+void MpSidePacketInsert(MpSidePacket* side_packet, const char* key, MpPacket* packet) {
+  side_packet->impl->emplace(std::string(key), *packet->impl.get());
 }

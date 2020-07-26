@@ -1,5 +1,9 @@
 #include "mediapipe/apis/framework/port/status.h"
 
+void MpStatusDestroy(MpStatus* status) {
+  delete status;
+}
+
 bool MpStatusOk(MpStatus* status) {
   return status->impl->ok();
 }

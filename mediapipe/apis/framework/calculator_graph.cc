@@ -1,6 +1,3 @@
-#include <ostream>
-#include <fstream>
-#include <string>
 #include "mediapipe/framework/calculator.pb.h"
 #include "mediapipe/framework/port/parse_text_proto.h"
 #include "mediapipe/apis/framework/calculator_graph.h"
@@ -53,11 +50,10 @@ MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* grap
   return new MpStatusOrPoller { std::move(status_or_value) };
 }
 
-bool MpOutputStreamPollerNext(MpOutputStreamPoller mp_poller, MpPacket mp_packet) {
+bool MpOutputStreamPollerNext(void* mp_poller, MpPacket* packet) {
   auto poller = static_cast<mediapipe::OutputStreamPoller*>(mp_poller);
-  auto packet = static_cast<mediapipe::Packet*>(mp_packet);
 
-  return poller->Next(packet);
+  return poller->Next(packet->impl.get());
 }
 
 MpStatus* MpCalculatorGraphAddStringPacketToInputStream(MpCalculatorGraph* graph, const char* name, const char* value, int timestamp) {
@@ -79,4 +75,8 @@ bool MpStatusOrPollerOk(MpStatusOrPoller* status_or_poller) {
 
 MpOutputStreamPoller MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller) {
   return status_or_poller->get();
+}
+
+void MpStatusOrPollerDestroy(MpStatusOrPoller* status_or_poller) {
+  delete status_or_poller;
 }
