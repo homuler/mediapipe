@@ -14,6 +14,10 @@ MpCalculatorGraphConfig* ParseMpCalculatorGraphConfig(const char* input) {
   return new MpCalculatorGraphConfig { std::unique_ptr<mediapipe::CalculatorGraphConfig> { std::move(config) } };
 }
 
+void MpCalculatorGraphConfigDestroy(MpCalculatorGraphConfig* config) {
+  delete config;
+}
+
 MpCalculatorGraph* MpCalculatorGraphCreate() {
   auto calculator_graph = std::unique_ptr<mediapipe::CalculatorGraph> { new mediapipe::CalculatorGraph() };
 
@@ -24,29 +28,29 @@ void MpCalculatorGraphDestroy(MpCalculatorGraph* graph) {
   delete graph;
 }
 
-MpStatus MpCalculatorGraphInitialize(MpCalculatorGraph* graph, MpCalculatorGraphConfig* input_config) {
-  auto status = graph->impl->Initialize(*input_config->impl);
+MpStatus* MpCalculatorGraphInitialize(MpCalculatorGraph* graph, MpCalculatorGraphConfig* config) {
+  auto status = graph->impl->Initialize(*config->impl);
 
-  return new mediapipe::Status { std::move(status) };
+  return new MpStatus { std::move(status) };
 }
 
-MpStatus MpCalculatorGraphStartRun(MpCalculatorGraph* graph, MpSidePacket* mp_side_packet) {
+MpStatus* MpCalculatorGraphStartRun(MpCalculatorGraph* graph, MpSidePacket* mp_side_packet) {
   auto side_packet = mp_side_packet->impl;
   auto status = graph->impl->StartRun(*side_packet);
 
-  return new mediapipe::Status { std::move(status) };
+  return new MpStatus { std::move(status) };
 }
 
-MpStatus MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph) {
+MpStatus* MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph) {
   auto status = graph->impl->WaitUntilDone();
 
-  return new mediapipe::Status { std::move(status) };
+  return new MpStatus { std::move(status) };
 }
 
-MpStatusOrPoller MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* graph, const char* name) {
+MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* graph, const char* name) {
   auto status_or_value = graph->impl->AddOutputStreamPoller(std::string(name));
 
-  return new mediapipe::StatusOrPoller { std::move(status_or_value) };
+  return new MpStatusOrPoller { std::move(status_or_value) };
 }
 
 bool MpOutputStreamPollerNext(MpOutputStreamPoller mp_poller, MpPacket mp_packet) {
@@ -56,25 +60,23 @@ bool MpOutputStreamPollerNext(MpOutputStreamPoller mp_poller, MpPacket mp_packet
   return poller->Next(packet);
 }
 
-MpStatus MpCalculatorGraphAddStringPacketToInputStream(MpCalculatorGraph* graph, const char* name, const char* value, int timestamp) {
+MpStatus* MpCalculatorGraphAddStringPacketToInputStream(MpCalculatorGraph* graph, const char* name, const char* value, int timestamp) {
   auto packet = mediapipe::MakePacket<std::string>(std::string(value)).At(mediapipe::Timestamp(timestamp));
   auto status = graph->impl->AddPacketToInputStream(std::string(name), packet);
 
-  return new mediapipe::Status { std::move(status) };
+  return new MpStatus { std::move(status) };
 }
 
-MpStatus MpCalculatorGraphCloseInputStream(MpCalculatorGraph* graph, const char* name) {
+MpStatus* MpCalculatorGraphCloseInputStream(MpCalculatorGraph* graph, const char* name) {
   auto status = graph->impl->CloseInputStream(std::string(name));
 
-  return new mediapipe::Status { std::move(status) };
+  return new MpStatus { std::move(status) };
 }
 
-bool MpStatusOrPollerOk(MpStatusOrPoller _status_or_poller) {
-  return MpStatusOrOk<mediapipe::OutputStreamPoller>(_status_or_poller);
+bool MpStatusOrPollerOk(MpStatusOrPoller* status_or_poller) {
+  return status_or_poller->ok();
 }
 
-MpOutputStreamPoller MpStatusOrPollerValueOrDie(MpStatusOrPoller mp_status_or_poller) {
-  auto value = std::move(*static_cast<mediapipe::StatusOrPoller*>(mp_status_or_poller)).ValueOrDie();
-
-  return new mediapipe::OutputStreamPoller { std::move(value) };
+MpOutputStreamPoller MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller) {
+  return status_or_poller->get();
 }

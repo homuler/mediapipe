@@ -1,24 +1,18 @@
-#ifdef DLL_EXPORTS
-#define MP_CAPI_EXPORT __declspec(dllexport)
-#else
-#define MP_CAPI_EXPORT
-#endif
-
 #include "mediapipe/framework/port/status.h"
+#include "mediapipe/apis/common.h";
 
-#ifdef __cplusplus
 extern "C" {
-#endif
 
-typedef void* MpStatus;
+typedef struct MpStatus {
+  std::shared_ptr<mediapipe::Status> impl;
 
-MP_CAPI_EXPORT extern bool MpStatusOk(MpStatus status);
+  MpStatus(mediapipe::Status&& status) : impl { std::shared_ptr<mediapipe::Status> { new mediapipe::Status { status } } } {}
+} MpStatus;
 
-MP_CAPI_EXPORT extern int GetMpStatusRawCode(MpStatus status);
+MP_CAPI_EXPORT extern bool MpStatusOk(MpStatus* status);
 
-MP_CAPI_EXPORT extern const char* MpStatusToString(MpStatus status);
+MP_CAPI_EXPORT extern int GetMpStatusRawCode(MpStatus* status);
 
+MP_CAPI_EXPORT extern const char* MpStatusToString(MpStatus* status);
 
-#ifdef __cplusplus
 } // extern "C"
-#endif

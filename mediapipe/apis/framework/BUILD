@@ -10,6 +10,7 @@ cc_library(
         ":packet",
         "//mediapipe/framework:calculator_graph",
         "//mediapipe/framework/port:parse_text_proto",
+        "//mediapipe/apis:common",
         "//mediapipe/apis/framework/port:status",
         "//mediapipe/apis/framework/port:statusor",
     ],
@@ -21,6 +22,7 @@ cc_library(
     srcs = ["packet.cc"],
     hdrs = ["packet.h"],
     deps = [
+        "//mediapipe/apis:common",
         "//mediapipe/framework:packet",
     ],
     alwayslink = True,
