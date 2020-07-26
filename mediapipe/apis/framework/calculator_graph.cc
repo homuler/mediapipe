@@ -5,16 +5,11 @@
 #include "mediapipe/framework/port/parse_text_proto.h"
 #include "mediapipe/apis/framework/calculator_graph.h"
 
-void debug(std::string text) {
-  std::ofstream file;
+MpCalculatorGraphConfig* ParseMpCalculatorGraphConfig(const char* input) {
+  auto config = new mediapipe::CalculatorGraphConfig {};
+  auto result = google::protobuf::TextFormat::ParseFromString(input, config);
 
-  file.open("log.txt", std::ios_base::app);
-  file << text << "\n";
-  file.close();
-}
-
-MpCalculatorGraphConfig* ParseMpCalculatorGraphConfigOrDie(const char* input) {
-  auto config = new mediapipe::CalculatorGraphConfig { mediapipe::ParseTextProtoOrDie<mediapipe::CalculatorGraphConfig>(input) };
+  if (!result) return nullptr;
 
   return new MpCalculatorGraphConfig { std::unique_ptr<mediapipe::CalculatorGraphConfig> { std::move(config) } };
 }

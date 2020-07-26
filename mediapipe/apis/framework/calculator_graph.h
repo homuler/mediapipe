@@ -24,7 +24,7 @@ typedef struct MpCalculatorGraph {
 typedef void* MpStatusOrPoller;
 typedef void* MpOutputStreamPoller;
 
-MP_CAPI_EXPORT extern MpCalculatorGraphConfig* ParseMpCalculatorGraphConfigOrDie(const char* input);
+MP_CAPI_EXPORT extern MpCalculatorGraphConfig* ParseMpCalculatorGraphConfig(const char* input);
 
 MP_CAPI_EXPORT extern MpCalculatorGraph* MpCalculatorGraphCreate();
 
