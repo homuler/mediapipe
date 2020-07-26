@@ -16,9 +16,7 @@ void MpCalculatorGraphConfigDestroy(MpCalculatorGraphConfig* config) {
 }
 
 MpCalculatorGraph* MpCalculatorGraphCreate() {
-  auto calculator_graph = std::unique_ptr<mediapipe::CalculatorGraph> { new mediapipe::CalculatorGraph() };
-
-  return new MpCalculatorGraph { std::move(calculator_graph) };
+  return new MpCalculatorGraph();
 }
 
 void MpCalculatorGraphDestroy(MpCalculatorGraph* graph) {

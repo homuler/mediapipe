@@ -12,6 +12,8 @@ typedef struct MpCalculatorGraphConfig {
 
 typedef struct MpCalculatorGraph {
   std::unique_ptr<mediapipe::CalculatorGraph> impl;
+
+  MpCalculatorGraph() : impl { std::make_unique<mediapipe::CalculatorGraph>() } {}
 } MpCalculatorGraph;
 
 typedef MpStatusOrValue<mediapipe::OutputStreamPoller> MpStatusOrPoller;

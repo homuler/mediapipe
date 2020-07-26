@@ -7,7 +7,7 @@ typedef struct MpPacket {
   std::unique_ptr<mediapipe::Packet> impl;
 
   MpPacket() : impl { std::make_unique<mediapipe::Packet>() } {}
-  MpPacket(mediapipe::Packet&& packet) : impl { std::unique_ptr<mediapipe::Packet> { new mediapipe::Packet { packet } } } {}
+  MpPacket(mediapipe::Packet&& packet) : impl { std::make_unique<mediapipe::Packet>(packet) } {}
 } MpPacket;
 
 typedef struct MpSidePacket {

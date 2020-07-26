@@ -6,10 +6,10 @@ struct MpStatusOrValue {
   std::unique_ptr<T> value;
 
   MpStatusOrValue(mediapipe::StatusOr<T>&& status_or) :
-    status { std::shared_ptr<mediapipe::Status> { new mediapipe::Status { std::move(status_or.status()) } } }
+    status { std::make_shared<mediapipe::Status>(std::move(status_or.status())) }
   {
     if (status->ok()) {
-      value = std::unique_ptr<T> { new T { std::move(status_or.ValueOrDie()) } };
+      value = std::make_unique<T>(std::move(status_or.ValueOrDie()));
     }
   }
 
