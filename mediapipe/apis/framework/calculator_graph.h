@@ -1,3 +1,7 @@
+#ifndef MEDIAPIPE_APIS_FRAMEWORK_CALCULATOR_GRAPH_H_
+#define MEDIAPIPE_APIS_FRAMEWORK_CALCULATOR_GRAPH_H_
+
+#include <memory>
 #include "mediapipe/framework/calculator_graph.h"
 #include "mediapipe/apis/common.h";
 #include "mediapipe/apis/framework/packet.h"
@@ -34,7 +38,8 @@ MP_CAPI_EXPORT extern MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(M
 MP_CAPI_EXPORT extern bool MpOutputStreamPollerNext(MpOutputStreamPoller poller, MpPacket* packet);
 
 /** mediapipe::InputStream API */
-MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphAddStringPacketToInputStream(MpCalculatorGraph* graph, const char* name, const char* packet, int timestamp);
+MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphAddStringPacketToInputStream(
+    MpCalculatorGraph* graph, const char* name, const char* packet, int timestamp);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphCloseInputStream(MpCalculatorGraph* graph, const char* name);
 
 /** mediapipe::StatusOrPoller API */
@@ -42,4 +47,6 @@ MP_CAPI_EXPORT extern void MpStatusOrPollerDestroy(MpStatusOrPoller* status_or_p
 MP_CAPI_EXPORT extern bool MpStatusOrPollerOk(MpStatusOrPoller* status_or_poller);
 MP_CAPI_EXPORT extern MpOutputStreamPoller MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller);
 
-} // extern "C"
+}  // extern "C"
+
+#endif  // MEDIAPIPE_APIS_FRAMEWORK_CALCULATOR_GRAPH_H_

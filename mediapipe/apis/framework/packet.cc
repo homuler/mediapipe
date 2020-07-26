@@ -1,3 +1,5 @@
+#include <string>
+#include <utility>
 #include "mediapipe/apis/framework/packet.h"
 
 MpPacket* MpPacketCreate() {
@@ -17,8 +19,8 @@ MpPacket* MpMakeStringPacketAt(const char* string, int timestamp) {
 const char* MpPacketGetString(MpPacket* packet) {
   auto text = packet->impl->Get<std::string>();
 
-  char* result = new char[text.size()];
-  strcpy(result, text.c_str());
+  char* result = new char[text.size() + 1];
+  snprintf(result, text.size() + 1, text.c_str());
 
   return result;
 }

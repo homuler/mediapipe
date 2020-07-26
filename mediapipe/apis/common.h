@@ -7,4 +7,4 @@
 #define MP_CAPI_EXPORT
 #endif
 
-#endif // MEDIAPIPE_APIS_COMMON_H_
+#endif  // MEDIAPIPE_APIS_COMMON_H_

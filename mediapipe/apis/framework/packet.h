@@ -1,3 +1,9 @@
+#ifndef MEDIAPIPE_APIS_FRAMEWORK_PACKET_H_
+#define MEDIAPIPE_APIS_FRAMEWORK_PACKET_H_
+
+#include <map>
+#include <memory>
+#include <string>
 #include "mediapipe/apis/common.h"
 #include "mediapipe/framework/packet.h"
 
@@ -19,7 +25,7 @@ typedef struct MpSidePacket {
 /** mediapipe::Packet API */
 MP_CAPI_EXPORT extern MpPacket* MpPacketCreate();
 MP_CAPI_EXPORT extern void MpPacketDestroy(MpPacket* packet);
-MP_CAPI_EXPORT extern MpPacket* MpMakeStringPacketAt(const char* string, int timestamp);
+MP_CAPI_EXPORT extern MpPacket* MpMakeStringPacketAt(const char* str, int timestamp);
 MP_CAPI_EXPORT extern const char* MpPacketGetString(MpPacket* packet);
 
 /** SidePacket API */
@@ -27,4 +33,6 @@ MP_CAPI_EXPORT extern MpSidePacket* MpSidePacketCreate();
 MP_CAPI_EXPORT extern void MpSidePacketDestroy(MpSidePacket* side_packet);
 MP_CAPI_EXPORT extern void MpSidePacketInsert(const char* key, MpPacket* packet);
 
-} // extern "C"
+}  // extern "C"
+
+#endif  // MEDIAPIPE_APIS_FRAMEWORK_PACKET_H_

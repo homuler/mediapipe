@@ -1,3 +1,7 @@
+#ifndef MEDIAPIPE_APIS_FRAMEWORK_PORT_STATUS_H_
+#define MEDIAPIPE_APIS_FRAMEWORK_PORT_STATUS_H_
+
+#include <memory>
 #include "mediapipe/framework/port/status.h"
 #include "mediapipe/apis/common.h";
 
@@ -14,4 +18,6 @@ MP_CAPI_EXPORT extern bool MpStatusOk(MpStatus* status);
 MP_CAPI_EXPORT extern int GetMpStatusRawCode(MpStatus* status);
 MP_CAPI_EXPORT extern const char* MpStatusToString(MpStatus* status);
 
-} // extern "C"
+}  // extern "C"
+
+#endif  // MEDIAPIPE_APIS_FRAMEWORK_PORT_STATUS_H_

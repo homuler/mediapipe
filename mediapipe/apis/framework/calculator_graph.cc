@@ -1,3 +1,5 @@
+#include <string>
+#include <utility>
 #include "mediapipe/framework/calculator.pb.h"
 #include "mediapipe/framework/port/parse_text_proto.h"
 #include "mediapipe/apis/framework/calculator_graph.h"

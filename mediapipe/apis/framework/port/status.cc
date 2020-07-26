@@ -15,8 +15,8 @@ int GetMpStatusRawCode(MpStatus* status) {
 const char* MpStatusToString(MpStatus* status) {
   auto text = status->impl->ToString();
 
-  char* result = new char[text.size()];
-  strcpy(result, text.c_str());
+  char* result = new char[text.size() + 1];
+  snprintf(result, text.size() + 1, text.c_str());
 
   return result;
 }
