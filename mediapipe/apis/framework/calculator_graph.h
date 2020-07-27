@@ -38,8 +38,7 @@ MP_CAPI_EXPORT extern MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(M
 MP_CAPI_EXPORT extern bool MpOutputStreamPollerNext(MpOutputStreamPoller poller, MpPacket* packet);
 
 /** mediapipe::InputStream API */
-MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphAddStringPacketToInputStream(
-    MpCalculatorGraph* graph, const char* name, const char* packet, int timestamp);
+MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphAddPacketToInputStream(MpCalculatorGraph* graph, const char* name, MpPacket* packet);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphCloseInputStream(MpCalculatorGraph* graph, const char* name);
 
 /** mediapipe::StatusOrPoller API */

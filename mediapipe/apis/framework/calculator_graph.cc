@@ -56,9 +56,8 @@ bool MpOutputStreamPollerNext(void* mp_poller, MpPacket* packet) {
   return poller->Next(packet->impl.get());
 }
 
-MpStatus* MpCalculatorGraphAddStringPacketToInputStream(MpCalculatorGraph* graph, const char* name, const char* value, int timestamp) {
-  auto packet = mediapipe::MakePacket<std::string>(std::string(value)).At(mediapipe::Timestamp(timestamp));
-  auto status = graph->impl->AddPacketToInputStream(std::string(name), packet);
+MpStatus* MpCalculatorGraphAddPacketToInputStream(MpCalculatorGraph* graph, const char* name, MpPacket* packet) {
+  auto status = graph->impl->AddPacketToInputStream(std::string(name), *packet->impl);
 
   return new MpStatus { std::move(status) };
 }
