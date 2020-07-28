@@ -68,12 +68,14 @@ MpStatus* MpCalculatorGraphCloseInputStream(MpCalculatorGraph* graph, const char
   return new MpStatus { std::move(status) };
 }
 
-bool MpStatusOrPollerOk(MpStatusOrPoller* status_or_poller) {
-  return status_or_poller->ok();
+MpStatus* MpStatusOrPollerStatus(MpStatusOrPoller* status_or_poller) {
+  mediapipe::Status status { *status_or_poller->status };
+
+  return new MpStatus { std::move(status) };
 }
 
 MpOutputStreamPoller MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller) {
-  return status_or_poller->get();
+  return status_or_poller->value.get();
 }
 
 void MpStatusOrPollerDestroy(MpStatusOrPoller* status_or_poller) {

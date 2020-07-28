@@ -13,6 +13,7 @@ typedef struct MpStatus {
   MpStatus(mediapipe::Status&& status) : impl { std::make_shared<mediapipe::Status>(status) } {}
 } MpStatus;
 
+MP_CAPI_EXPORT extern MpStatus* MpStatusCreate(int code, const char* message);
 MP_CAPI_EXPORT extern void MpStatusDestroy(MpStatus* status);
 MP_CAPI_EXPORT extern bool MpStatusOk(MpStatus* status);
 MP_CAPI_EXPORT extern int GetMpStatusRawCode(MpStatus* status);

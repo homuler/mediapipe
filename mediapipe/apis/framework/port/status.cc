@@ -1,4 +1,12 @@
+#include <utility>
 #include "mediapipe/apis/framework/port/status.h"
+
+MpStatus* MpStatusCreate(int code, const char* message) {
+  auto status_code = static_cast<mediapipe::StatusCode>(code);
+  mediapipe::Status status { status_code, message };
+
+  return new MpStatus { std::move(status) };
+}
 
 void MpStatusDestroy(MpStatus* status) {
   delete status;

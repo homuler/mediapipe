@@ -17,14 +17,6 @@ struct MpStatusOrValue {
       value = std::make_unique<T>(std::move(status_or.ValueOrDie()));
     }
   }
-
-  bool ok() const {
-    return status->ok();
-  }
-
-  T* get() const {
-    return this->value.get();
-  }
 };
 
 #endif  // MEDIAPIPE_APIS_FRAMEWORK_PORT_STATUSOR_H_
