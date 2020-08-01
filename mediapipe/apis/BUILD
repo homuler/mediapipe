@@ -3,6 +3,7 @@ cc_binary(
     deps = [
         "//mediapipe/calculators/core:pass_through_calculator",
         "//mediapipe/apis/framework:calculator_graph",
+        "//mediapipe/apis/framework/formats:image_frame",
         ":protobuf",
     ],
     visibility = None,
