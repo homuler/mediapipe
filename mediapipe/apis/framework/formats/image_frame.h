@@ -2,17 +2,29 @@
 #define MEDIAPIPE_APIS_FRAMEWORK_FORMATS_IMAGE_FRAME_H_
 
 #include <memory>
+#include <utility>
 #include "mediapipe/framework/formats/image_frame.h"
 #include "mediapipe/apis/common.h";
+#include "mediapipe/apis/framework/port/status.h";
+#include "mediapipe/apis/framework/port/statusor.h";
 
 extern "C" {
 
-typedef struct MpImageFrame {
-  std::unique_ptr<mediapipe::ImageFrame> impl;
-} MpImageFrame;
+typedef MpStatusOrValue<mediapipe::ImageFrame> MpStatusOrImageFrame;
 
-MP_CAPI_EXPORT extern MpImageFrame* MpImageFrameCreate(int format_code, int width, int height, int width_step, uint8* pixel_data);
-MP_CAPI_EXPORT extern void MpImageFrameDestroy(MpImageFrame* image_frame);
+MP_CAPI_EXPORT extern mediapipe::ImageFrame* MpImageFrameCreate(int format_code, int width, int height, int width_step, uint8* pixel_data);
+MP_CAPI_EXPORT extern bool MpImageFrameIsEmpty(mediapipe::ImageFrame* image_frame);
+MP_CAPI_EXPORT extern int MpImageFrameWidth(mediapipe::ImageFrame* image_frame);
+MP_CAPI_EXPORT extern int MpImageFrameHeight(mediapipe::ImageFrame* image_frame);
+MP_CAPI_EXPORT extern int MpImageFrameChannelSize(mediapipe::ImageFrame* image_frame);
+MP_CAPI_EXPORT extern int MpImageFrameNumberOfChannels(mediapipe::ImageFrame* image_frame);
+MP_CAPI_EXPORT extern int MpImageFrameByteDepth(mediapipe::ImageFrame* image_frame);
+MP_CAPI_EXPORT extern int MpImageFrameWidthStep(mediapipe::ImageFrame* image_frame);
+MP_CAPI_EXPORT extern const uint8* MpImageFramePixelData(mediapipe::ImageFrame* image_frame);
+
+MP_CAPI_EXPORT extern void MpStatusOrImageFrameDestroy(MpStatusOrImageFrame* image_frame);
+MP_CAPI_EXPORT extern MpStatus* MpStatusOrImageFrameStatus(MpStatusOrImageFrame* image_frame);
+MP_CAPI_EXPORT extern mediapipe::ImageFrame* MpStatusOrImageFrameValue(MpStatusOrImageFrame* image_frame);
 
 }  // extern "C"
 

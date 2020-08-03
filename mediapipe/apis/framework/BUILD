@@ -22,8 +22,9 @@ cc_library(
     srcs = ["packet.cc"],
     hdrs = ["packet.h"],
     deps = [
-        "//mediapipe/apis:common",
         "//mediapipe/framework:packet",
+        "//mediapipe/apis:common",
+        "//mediapipe/apis/framework/formats:image_frame",
     ],
     alwayslink = True,
 )

@@ -14,7 +14,15 @@ struct MpStatusOrValue {
     status { std::make_shared<mediapipe::Status>(std::move(status_or.status())) }
   {
     if (status->ok()) {
-      value = std::make_unique<T>(std::move(status_or.ValueOrDie()));
+      value = std::make_unique<T>(status_or.ConsumeValueOrDie());
+    }
+  }
+
+  explicit MpStatusOrValue(mediapipe::StatusOr<std::unique_ptr<T>>&& status_or) :
+    status { std::make_shared<mediapipe::Status>(std::move(status_or.status())) }
+  {
+    if (status->ok()) {
+      value = status_or.ConsumeValueOrDie();
     }
   }
 };

@@ -4,8 +4,9 @@
 #include <map>
 #include <memory>
 #include <string>
-#include "mediapipe/apis/common.h"
 #include "mediapipe/framework/packet.h"
+#include "mediapipe/apis/common.h"
+#include "mediapipe/apis/framework/formats/image_frame.h"
 
 extern "C" {
 
@@ -25,8 +26,14 @@ typedef struct MpSidePacket {
 /** mediapipe::Packet API */
 MP_CAPI_EXPORT extern MpPacket* MpPacketCreate();
 MP_CAPI_EXPORT extern void MpPacketDestroy(MpPacket* packet);
+
+// String
 MP_CAPI_EXPORT extern MpPacket* MpMakeStringPacketAt(const char* str, int timestamp);
 MP_CAPI_EXPORT extern const char* MpPacketGetString(MpPacket* packet);
+
+// ImageFrame
+MP_CAPI_EXPORT extern MpPacket* MpMakeImageFramePacketAt(mediapipe::ImageFrame* image_frame, int timestamp);
+MP_CAPI_EXPORT extern MpStatusOrImageFrame* MpPacketConsumeImageFrame(MpPacket* packet);
 
 /** SidePacket API */
 MP_CAPI_EXPORT extern MpSidePacket* MpSidePacketCreate();

@@ -25,6 +25,18 @@ const char* MpPacketGetString(MpPacket* packet) {
   return result;
 }
 
+MpPacket* MpMakeImageFramePacketAt(mediapipe::ImageFrame* image_frame, int timestamp) {
+  auto packet = mediapipe::Adopt(image_frame).At(mediapipe::Timestamp(timestamp));
+
+  return new MpPacket { std::move(packet) };
+}
+
+MpStatusOrImageFrame* MpPacketConsumeImageFrame(MpPacket* packet) {
+  auto status_or_image_frame = packet->impl->Consume<mediapipe::ImageFrame>();
+
+  return new MpStatusOrImageFrame { std::move(status_or_image_frame) };
+}
+
 MpSidePacket* MpSidePacketCreate() {
   return new MpSidePacket();
 }

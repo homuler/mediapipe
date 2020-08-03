@@ -9,6 +9,8 @@ cc_library(
     deps = [
         "//mediapipe/apis:common",
         "//mediapipe/framework/formats:image_frame",
+        "//mediapipe/apis/framework/port:status",
+        "//mediapipe/apis/framework/port:statusor",
     ],
     alwayslink = True,
 )
