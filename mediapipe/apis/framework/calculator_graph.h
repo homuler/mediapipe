@@ -21,7 +21,6 @@ typedef struct MpCalculatorGraph {
 } MpCalculatorGraph;
 
 typedef MpStatusOrValue<mediapipe::OutputStreamPoller> MpStatusOrPoller;
-typedef void* MpOutputStreamPoller;
 
 /** mediapipe::CalculatorGraph API */
 MP_CAPI_EXPORT extern MpCalculatorGraphConfig* ParseMpCalculatorGraphConfig(const char* input);
@@ -35,7 +34,7 @@ MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphWaitUntilDone(MpCalculatorGraph
 
 /** mediapipe::OutputStreamPoller API */
 MP_CAPI_EXPORT extern MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* graph, const char* name);
-MP_CAPI_EXPORT extern bool MpOutputStreamPollerNext(MpOutputStreamPoller poller, MpPacket* packet);
+MP_CAPI_EXPORT extern bool MpOutputStreamPollerNext(mediapipe::OutputStreamPoller* poller, MpPacket* packet);
 
 /** mediapipe::InputStream API */
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphAddPacketToInputStream(MpCalculatorGraph* graph, const char* name, MpPacket* packet);
@@ -44,7 +43,7 @@ MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphCloseInputStream(MpCalculatorGr
 /** mediapipe::StatusOrPoller API */
 MP_CAPI_EXPORT extern void MpStatusOrPollerDestroy(MpStatusOrPoller* status_or_poller);
 MP_CAPI_EXPORT extern MpStatus* MpStatusOrPollerStatus(MpStatusOrPoller* status_or_poller);
-MP_CAPI_EXPORT extern MpOutputStreamPoller MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller);
+MP_CAPI_EXPORT extern mediapipe::OutputStreamPoller* MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller);
 
 }  // extern "C"
 

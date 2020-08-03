@@ -50,9 +50,7 @@ MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* grap
   return new MpStatusOrPoller { std::move(status_or_value) };
 }
 
-bool MpOutputStreamPollerNext(void* mp_poller, MpPacket* packet) {
-  auto poller = static_cast<mediapipe::OutputStreamPoller*>(mp_poller);
-
+bool MpOutputStreamPollerNext(mediapipe::OutputStreamPoller* poller, MpPacket* packet) {
   return poller->Next(packet->impl.get());
 }
 
@@ -74,7 +72,7 @@ MpStatus* MpStatusOrPollerStatus(MpStatusOrPoller* status_or_poller) {
   return new MpStatus { std::move(status) };
 }
 
-MpOutputStreamPoller MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller) {
+mediapipe::OutputStreamPoller* MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller) {
   return status_or_poller->value.get();
 }
 
