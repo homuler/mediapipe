@@ -72,8 +72,8 @@ MpStatus* MpStatusOrPollerStatus(MpStatusOrPoller* status_or_poller) {
   return new MpStatus { std::move(status) };
 }
 
-mediapipe::OutputStreamPoller* MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller) {
-  return status_or_poller->value.get();
+mediapipe::OutputStreamPoller* MpStatusOrPollerConsumeValue(MpStatusOrPoller* status_or_poller) {
+  return status_or_poller->value.release();
 }
 
 void MpStatusOrPollerDestroy(MpStatusOrPoller* status_or_poller) {

@@ -1,9 +1,9 @@
 #include "mediapipe/apis/framework/formats/image_frame.h"
 
-mediapipe::ImageFrame* MpImageFrameCreate(int format_code, int width, int height, int width_step, uint8* pixel_data) {
+mediapipe::ImageFrame* MpImageFrameCreate(int format_code, int width, int height, int width_step, uint8* pixel_data, Deleter deleter) {
   auto format = static_cast<mediapipe::ImageFormat::Format>(format_code);
 
-  return new mediapipe::ImageFrame { format, width, height, width_step, pixel_data };
+  return new mediapipe::ImageFrame { format, width, height, width_step, pixel_data, deleter };
 }
 
 bool MpImageFrameIsEmpty(mediapipe::ImageFrame* image_frame) {
@@ -42,6 +42,6 @@ void MpStatusOrImageFrameDestroy(MpStatusOrImageFrame* status_or_image_frame) {
   delete status_or_image_frame;
 }
 
-mediapipe::ImageFrame* MpStatusOrImageFrameValue(MpStatusOrImageFrame* status_or_image_frame) {
-  return status_or_image_frame->value.get();
+mediapipe::ImageFrame* MpStatusOrImageFrameConsumeValue(MpStatusOrImageFrame* status_or_image_frame) {
+  return status_or_image_frame->value.release();
 }

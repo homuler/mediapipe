@@ -43,7 +43,7 @@ MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphCloseInputStream(MpCalculatorGr
 /** mediapipe::StatusOrPoller API */
 MP_CAPI_EXPORT extern void MpStatusOrPollerDestroy(MpStatusOrPoller* status_or_poller);
 MP_CAPI_EXPORT extern MpStatus* MpStatusOrPollerStatus(MpStatusOrPoller* status_or_poller);
-MP_CAPI_EXPORT extern mediapipe::OutputStreamPoller* MpStatusOrPollerValue(MpStatusOrPoller* status_or_poller);
+MP_CAPI_EXPORT extern mediapipe::OutputStreamPoller* MpStatusOrPollerConsumeValue(MpStatusOrPoller* status_or_poller);
 
 }  // extern "C"
 
