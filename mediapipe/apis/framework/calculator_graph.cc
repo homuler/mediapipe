@@ -79,3 +79,7 @@ mediapipe::OutputStreamPoller* MpStatusOrPollerConsumeValue(MpStatusOrPoller* st
 void MpStatusOrPollerDestroy(MpStatusOrPoller* status_or_poller) {
   delete status_or_poller;
 }
+
+void MpOutputStreamPollerDestroy(mediapipe::OutputStreamPoller* poller) {
+  delete poller;
+}

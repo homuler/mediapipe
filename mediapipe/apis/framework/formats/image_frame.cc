@@ -6,6 +6,10 @@ mediapipe::ImageFrame* MpImageFrameCreate(int format_code, int width, int height
   return new mediapipe::ImageFrame { format, width, height, width_step, pixel_data, deleter };
 }
 
+void MpImageFrameDestroy(mediapipe::ImageFrame* image_frame) {
+  return delete image_frame;
+}
+
 bool MpImageFrameIsEmpty(mediapipe::ImageFrame* image_frame) {
   return image_frame->IsEmpty();
 }
@@ -40,6 +44,12 @@ const uint8* MpImageFramePixelData(mediapipe::ImageFrame* image_frame) {
 
 void MpStatusOrImageFrameDestroy(MpStatusOrImageFrame* status_or_image_frame) {
   delete status_or_image_frame;
+}
+
+MpStatus* MpStatusOrImageFrameStatus(MpStatusOrImageFrame* status_or_image_frame) {
+  mediapipe::Status status { *status_or_image_frame->status };
+
+  return new MpStatus { std::move(status) };
 }
 
 mediapipe::ImageFrame* MpStatusOrImageFrameConsumeValue(MpStatusOrImageFrame* status_or_image_frame) {
