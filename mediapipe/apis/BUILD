@@ -1,10 +1,18 @@
 cc_binary(
     name = "mediapipe_c",
     deps = [
-        "//mediapipe/apis/framework:calculator_graph",
         ":calculators",
         ":protobuf",
-    ],
+        "//mediapipe/apis/framework:calculator_graph",
+    ] + select({
+        "//mediapipe/gpu:disable_gpu": [],
+        "//conditions:default": [
+            "//mediapipe/apis/gpu:gl_base",
+            "//mediapipe/apis/gpu:gl_calculator_helper",
+            "//mediapipe/apis/gpu:gpu_buffer_format",
+            "//mediapipe/apis/gpu:gpu_shared_data_internal",
+        ],
+    }),
     visibility = None,
     linkshared = True,
 )
@@ -25,9 +33,13 @@ cc_library(
         "//mediapipe/calculators/util:detection_letterbox_removal_calculator",
         "//mediapipe/calculators/util:detections_to_render_data_calculator",
         "//mediapipe/calculators/util:non_max_suppression_calculator",
-        "//mediapipe/gpu:gpu_buffer_to_image_frame_calculator",
-        "//mediapipe/gpu:image_frame_to_gpu_buffer_calculator",
-    ],
+    ] + select({
+        "//mediapipe/gpu:disable_gpu": [],
+        "//conditions:default": [
+            "//mediapipe/gpu:gpu_buffer_to_image_frame_calculator",
+            "//mediapipe/gpu:image_frame_to_gpu_buffer_calculator",
+        ],
+    }),
 )
 
 cc_library(

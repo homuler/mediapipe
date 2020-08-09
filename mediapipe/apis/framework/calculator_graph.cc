@@ -44,6 +44,12 @@ MpStatus* MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph) {
   return new MpStatus { std::move(status) };
 }
 
+#ifndef MEDIAPIPE_DISABLE_GPU
+MpStatus* MpCalculatorGraphSetGpuResources(MpCalculatorGraph* graph, MpGpuResources* gpu_resources) {
+  return new MpStatus { graph->impl->SetGpuResources(gpu_resources->impl) };
+}
+#endif  // !defined(MEDIAPIPE_DISABLE_GPU)
+
 MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* graph, const char* name) {
   auto status_or_value = graph->impl->AddOutputStreamPoller(std::string(name));
 

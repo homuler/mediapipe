@@ -13,7 +13,12 @@ cc_library(
         "//mediapipe/apis:common",
         "//mediapipe/apis/framework/port:status",
         "//mediapipe/apis/framework/port:statusor",
-    ],
+    ] + select({
+        "//mediapipe/gpu:disable_gpu": [],
+        "//conditions:default": [
+            "//mediapipe/apis/gpu:gpu_shared_data_internal",
+        ],
+    }),
     alwayslink = True,
 )
 

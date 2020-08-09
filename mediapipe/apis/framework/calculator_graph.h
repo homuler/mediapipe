@@ -8,6 +8,10 @@
 #include "mediapipe/apis/framework/port/status.h"
 #include "mediapipe/apis/framework/port/statusor.h"
 
+#ifndef MEDIAPIPE_DISABLE_GPU
+#include "mediapipe/apis/gpu/gpu_shared_data_internal.h"
+#endif  // !defined(MEDIAPIPE_DISABLE_GPU)
+
 extern "C" {
 
 typedef struct MpCalculatorGraphConfig {
@@ -31,6 +35,10 @@ MP_CAPI_EXPORT extern void MpCalculatorGraphDestroy(MpCalculatorGraph* graph);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphInitialize(MpCalculatorGraph* graph, MpCalculatorGraphConfig* input_config);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphStartRun(MpCalculatorGraph* graph, MpSidePacket* side_packet);
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph);
+
+#ifndef MEDIAPIPE_DISABLE_GPU
+MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphSetGpuResources(MpGpuResources* gpu_resources);
+#endif  // !defined(MEDIAPIPE_DISABLE_GPU)
 
 /** mediapipe::OutputStreamPoller API */
 MP_CAPI_EXPORT extern MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* graph, const char* name);
