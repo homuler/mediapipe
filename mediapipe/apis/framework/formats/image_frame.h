@@ -10,7 +10,7 @@
 
 extern "C" {
 
-typedef MpStatusOrValue<mediapipe::ImageFrame> MpStatusOrImageFrame;
+typedef MpStatusOrValue<std::unique_ptr<mediapipe::ImageFrame>> MpStatusOrImageFrame;
 typedef void (*Deleter)(uint8*);
 
 MP_CAPI_EXPORT extern mediapipe::ImageFrame* MpImageFrameCreate(

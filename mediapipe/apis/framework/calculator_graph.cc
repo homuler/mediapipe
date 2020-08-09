@@ -47,7 +47,10 @@ MpStatus* MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph) {
 MpStatusOrPoller* MpCalculatorGraphAddOutputStreamPoller(MpCalculatorGraph* graph, const char* name) {
   auto status_or_value = graph->impl->AddOutputStreamPoller(std::string(name));
 
-  return new MpStatusOrPoller { std::move(status_or_value) };
+  return new MpStatusOrPoller {
+    status_or_value.status(),
+    std::make_unique<mediapipe::OutputStreamPoller>(status_or_value.ConsumeValueOrDie())
+  };
 }
 
 bool MpOutputStreamPollerNext(mediapipe::OutputStreamPoller* poller, MpPacket* packet) {

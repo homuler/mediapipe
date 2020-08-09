@@ -20,7 +20,7 @@ typedef struct MpCalculatorGraph {
   MpCalculatorGraph() : impl { std::make_unique<mediapipe::CalculatorGraph>() } {}
 } MpCalculatorGraph;
 
-typedef MpStatusOrValue<mediapipe::OutputStreamPoller> MpStatusOrPoller;
+typedef MpStatusOrValue<std::unique_ptr<mediapipe::OutputStreamPoller>> MpStatusOrPoller;
 
 /** mediapipe::CalculatorGraph API */
 MP_CAPI_EXPORT extern MpCalculatorGraphConfig* ParseMpCalculatorGraphConfig(const char* input);
