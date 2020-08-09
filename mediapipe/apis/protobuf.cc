@@ -1,4 +1,5 @@
 #include <functional>
+#include <string>
 #include "mediapipe/apis/protobuf.h"
 
 using google::protobuf::LogLevel;
@@ -9,7 +10,7 @@ namespace {
 
 void HandleProtobufLog(LogLevel level, const char* filename, int line, const std::string& message) {
   logHandler(level, filename, line, message.c_str());
-};
+}
 
 google::protobuf::LogHandler* SetProtobufLogHandler(LogHandler* lh) {
   logHandler = lh;

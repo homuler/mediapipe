@@ -1,6 +1,13 @@
 #include "mediapipe/apis/framework/formats/image_frame.h"
 
-mediapipe::ImageFrame* MpImageFrameCreate(int format_code, int width, int height, int width_step, uint8* pixel_data, Deleter deleter) {
+mediapipe::ImageFrame* MpImageFrameCreate(int format_code, int width, int height, uint32 alignment_boundary) {
+  auto format = static_cast<mediapipe::ImageFormat::Format>(format_code);
+
+  return new mediapipe::ImageFrame { format, width, height, alignment_boundary };
+}
+
+mediapipe::ImageFrame* MpImageFrameCreateWithPixelData(
+    int format_code, int width, int height, int width_step, uint8* pixel_data, Deleter deleter) {
   auto format = static_cast<mediapipe::ImageFormat::Format>(format_code);
 
   return new mediapipe::ImageFrame { format, width, height, width_step, pixel_data, deleter };

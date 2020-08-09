@@ -14,6 +14,8 @@ typedef MpStatusOrValue<std::unique_ptr<mediapipe::ImageFrame>> MpStatusOrImageF
 typedef void (*Deleter)(uint8*);
 
 MP_CAPI_EXPORT extern mediapipe::ImageFrame* MpImageFrameCreate(
+    int format_code, int width, int height, int width_step, uint32 alignment_boundary);
+MP_CAPI_EXPORT extern mediapipe::ImageFrame* MpImageFrameCreateWithPixelData(
     int format_code, int width, int height, int width_step, uint8* pixel_data, Deleter deleter);
 MP_CAPI_EXPORT extern void MpImageFrameDestroy(mediapipe::ImageFrame* image_frame);
 MP_CAPI_EXPORT extern bool MpImageFrameIsEmpty(mediapipe::ImageFrame* image_frame);
