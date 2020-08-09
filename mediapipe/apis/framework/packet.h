@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <utility>
 #include "mediapipe/framework/packet.h"
 #include "mediapipe/apis/common.h"
 #include "mediapipe/apis/framework/formats/image_frame.h"
@@ -14,7 +15,7 @@ typedef struct MpPacket {
   std::unique_ptr<mediapipe::Packet> impl;
 
   MpPacket() : impl { std::make_unique<mediapipe::Packet>() } {}
-  MpPacket(mediapipe::Packet&& packet) : impl { std::make_unique<mediapipe::Packet>(packet) } {}
+  MpPacket(mediapipe::Packet packet) : impl { std::make_unique<mediapipe::Packet>(std::move(packet)) } {}
 } MpPacket;
 
 typedef struct MpSidePacket {

@@ -2,6 +2,7 @@
 #define MEDIAPIPE_APIS_FRAMEWORK_PORT_STATUS_H_
 
 #include <memory>
+#include <utility>
 #include "mediapipe/framework/port/status.h"
 #include "mediapipe/apis/common.h";
 
@@ -10,7 +11,7 @@ extern "C" {
 typedef struct MpStatus {
   std::shared_ptr<mediapipe::Status> impl;
 
-  MpStatus(mediapipe::Status&& status) : impl { std::make_shared<mediapipe::Status>(status) } {}
+  MpStatus(mediapipe::Status status) : impl { std::make_shared<mediapipe::Status>(std::move(status)) } {}
 } MpStatus;
 
 MP_CAPI_EXPORT extern MpStatus* MpStatusCreate(int code, const char* message);
