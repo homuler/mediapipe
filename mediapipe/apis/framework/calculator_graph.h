@@ -37,7 +37,7 @@ MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphStartRun(MpCalculatorGraph* gra
 MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph);
 
 #ifndef MEDIAPIPE_DISABLE_GPU
-MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphSetGpuResources(MpGpuResources* gpu_resources);
+MP_CAPI_EXPORT extern MpStatus* MpCalculatorGraphSetGpuResources(MpCalculatorGraph* graph, MpGpuResources* gpu_resources);
 #endif  // !defined(MEDIAPIPE_DISABLE_GPU)
 
 /** mediapipe::OutputStreamPoller API */
