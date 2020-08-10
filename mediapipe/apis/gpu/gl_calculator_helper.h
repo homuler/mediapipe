@@ -36,6 +36,7 @@ MP_CAPI_EXPORT extern mediapipe::GlTexture* MpGlCalculatorHelperCreateSourceText
 MP_CAPI_EXPORT extern void MpGlCalculatorHelperBindFramebuffer(MpGlCalculatorHelper* gpu_helper, mediapipe::GlTexture* gl_texture);
 
 /** GlTexture API */
+MP_CAPI_EXPORT extern void MpGlTextureDestroy(mediapipe::GlTexture* gl_texture);
 MP_CAPI_EXPORT extern void MpGlTextureRelease(mediapipe::GlTexture* gl_texture);
 MP_CAPI_EXPORT extern MpGpuBuffer* MpGlTextureGetGpuBufferFrame(mediapipe::GlTexture* gl_texture);
 
@@ -47,7 +48,9 @@ MP_CAPI_EXPORT extern int MpGpuBufferHeight(MpGpuBuffer* gpu_buffer);
 
 MP_CAPI_EXPORT extern MpPacket* MpMakeGpuBufferPacketAt(MpGpuBuffer* gpu_buffer, int timestamp);
 MP_CAPI_EXPORT extern MpStatusOrGpuBuffer* MpPacketConsumeGpuBuffer(MpPacket* packet);
-MP_CAPI_EXPORT extern MpGpuBuffer* MpStatusOrGpuBufferConsumeValue(MpStatusOrGpuBuffer* gpu_buffer);
+MP_CAPI_EXPORT extern void MpStatusOrGpuBufferDestroy(MpStatusOrGpuBuffer* status_or_gpu_buffer);
+MP_CAPI_EXPORT extern MpStatus* MpStatusOrGpuBufferStatus(MpStatusOrGpuBuffer* status_or_gpu_buffer);
+MP_CAPI_EXPORT extern MpGpuBuffer* MpStatusOrGpuBufferConsumeValue(MpStatusOrGpuBuffer* status_or_gpu_buffer);
 
 }  // extern "C"
 

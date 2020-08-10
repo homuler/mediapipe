@@ -6,8 +6,16 @@
 
 extern "C" {
 
+/** GpuBufferFormat API */
 MP_CAPI_EXPORT extern int MpImageFormatForGpuBufferFormat(uint32_t gpu_format_code);
-MP_CAPI_EXPORT extern mediapipe::GlTextureInfo* MpGlTextureInfoGpuBufferFormat(uint32_t gpu_format_code, int plane);
+MP_CAPI_EXPORT extern mediapipe::GlTextureInfo* MpGlTextureInfoForGpuBufferFormat(uint32_t gpu_format_code, int plane);
+
+/** GlTextureInfo API */
+MP_CAPI_EXPORT extern void MpGlTextureInfoDestroy(mediapipe::GlTextureInfo* gl_texture_info);
+MP_CAPI_EXPORT extern GLint MpGlTextureInfoGlInternalFormat(mediapipe::GlTextureInfo* gl_texture_info);
+MP_CAPI_EXPORT extern GLenum MpGlTextureInfoGlFormat(mediapipe::GlTextureInfo* gl_texture_info);
+MP_CAPI_EXPORT extern GLenum MpGlTextureInfoGlType(mediapipe::GlTextureInfo* gl_texture_info);
+MP_CAPI_EXPORT extern int MpGlTextureInfoDownscale(mediapipe::GlTextureInfo* gl_texture_info);
 
 }  // extern "C"
 

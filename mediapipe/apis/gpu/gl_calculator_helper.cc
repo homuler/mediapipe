@@ -31,6 +31,10 @@ void MpGlCalculatorHelperBindFramebuffer(MpGlCalculatorHelper* gpu_helper, media
   gpu_helper->impl->BindFramebuffer(*gl_texture);
 }
 
+void MpGlTextureDestroy(mediapipe::GlTexture* gl_texture) {
+  delete gl_texture;
+}
+
 void MpGlTextureRelease(mediapipe::GlTexture* gl_texture) {
   gl_texture->Release();
 }
@@ -67,6 +71,14 @@ MpStatusOrGpuBuffer* MpPacketConsumeGpuBuffer(MpPacket* packet) {
   auto status_or_gpu_buffer = packet->impl->Consume<mediapipe::GpuBuffer>();
 
   return new MpStatusOrGpuBuffer { std::move(status_or_gpu_buffer) };
+}
+
+void MpStatusOrGpuBufferDestroy(MpStatusOrGpuBuffer* status_or_gpu_buffer) {
+  delete status_or_gpu_buffer;
+}
+
+MpStatus* MpStatusOrGpuBufferStatus(MpStatusOrGpuBuffer* status_or_gpu_buffer) {
+  return new MpStatus { *status_or_gpu_buffer->status };
 }
 
 MpGpuBuffer* MpStatusOrGpuBufferConsumeValue(MpStatusOrGpuBuffer* gpu_buffer) {
