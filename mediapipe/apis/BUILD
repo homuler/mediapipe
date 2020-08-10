@@ -4,10 +4,12 @@ cc_binary(
         ":calculators",
         ":protobuf",
         "//mediapipe/apis/framework:calculator_graph",
+        "//mediapipe/apis/framework/port:logging",
     ] + select({
         "//mediapipe/gpu:disable_gpu": [],
         "//conditions:default": [
             "//mediapipe/apis/gpu:gl_base",
+            "//mediapipe/apis/gpu:gl_context",
             "//mediapipe/apis/gpu:gl_calculator_helper",
             "//mediapipe/apis/gpu:gpu_buffer_format",
             "//mediapipe/apis/gpu:gpu_shared_data_internal",
@@ -58,14 +60,4 @@ cc_library(
         ":common",
     ],
     alwayslink = True,
-)
-
-cc_binary(
-    name = "runner",
-    srcs = ["runner.cc"],
-    visibility = None,
-    deps = [
-        "//mediapipe/calculators/core:pass_through_calculator",
-        "//mediapipe/apis/framework:calculator_graph",
-    ],
 )
