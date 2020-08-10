@@ -3,6 +3,18 @@ package(
 )
 
 cc_library(
+    name = "logging",
+    srcs = ["logging.cc"],
+    hdrs = ["logging.h"],
+    deps = [
+        "//mediapipe/apis:common",
+        "//mediapipe/framework/port:logging",
+    ],
+    alwayslink = True,
+)
+
+
+cc_library(
     name = "status",
     srcs = ["status.cc"],
     hdrs = ["status.h"],
