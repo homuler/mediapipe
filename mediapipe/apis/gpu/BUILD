@@ -14,6 +14,17 @@ cc_library(
 )
 
 cc_library(
+    name = "gl_context",
+    srcs = ["gl_context.cc"],
+    hdrs = ["gl_context.h"],
+    deps = [
+        "//mediapipe/gpu:gl_context",
+        "//mediapipe/apis:common",
+    ],
+    alwayslink = True,
+)
+
+cc_library(
     name = "gpu_shared_data_internal",
     srcs = ["gpu_shared_data_internal.cc"],
     hdrs = ["gpu_shared_data_internal.h"],
