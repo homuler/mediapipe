@@ -16,14 +16,14 @@ MpStatusOrGpuResources* MpGpuResourcesCreate() {
   return new MpStatusOrGpuResources { status, std::unique_ptr<MpGpuResources>(gpu_resources) };
 }
 
-void MpStatusOrGpuResourcesDestroy(MpStatusOrGpuResources* gpu_resources) {
-  delete gpu_resources;
+void MpStatusOrGpuResourcesDestroy(MpStatusOrGpuResources* status_or_gpu_resources) {
+  delete status_or_gpu_resources;
 }
 
-MpStatus* MpStatusOrGpuResourcesStatus(MpStatusOrGpuResources* gpu_resources) {
-  return new MpStatus { *gpu_resources->status };
+MpStatus* MpStatusOrGpuResourcesStatus(MpStatusOrGpuResources* status_or_gpu_resources) {
+  return new MpStatus { *status_or_gpu_resources->status };
 }
 
-MpGpuResources* MpStatusOrGpuResourcesConsumeValue(MpStatusOrGpuResources* gpu_resources) {
-  return gpu_resources->value.release();
+MpGpuResources* MpStatusOrGpuResourcesConsumeValue(MpStatusOrGpuResources* status_or_gpu_resources) {
+  return status_or_gpu_resources->value.release();
 }

@@ -19,9 +19,9 @@ MP_CAPI_EXPORT extern void MpGpuResourcesDestroy(MpGpuResources* gpu_resources);
 MP_CAPI_EXPORT extern mediapipe::GpuResources* MpGpuResourcesGet(MpGpuResources* gpu_resources);
 
 MP_CAPI_EXPORT extern MpStatusOrGpuResources* MpGpuResourcesCreate();
-MP_CAPI_EXPORT extern void MpStatusOrGpuResourcesDestroy(MpStatusOrGpuResources* gpu_resources);
-MP_CAPI_EXPORT extern MpStatus* MpStatusOrGpuResourcesStatus(MpStatusOrGpuResources* gpu_resources);
-MP_CAPI_EXPORT extern MpGpuResources* MpStatusOrGpuResourcesConsumeValue(MpStatusOrGpuResources* gpu_resources);
+MP_CAPI_EXPORT extern void MpStatusOrGpuResourcesDestroy(MpStatusOrGpuResources* status_or_gpu_resources);
+MP_CAPI_EXPORT extern MpStatus* MpStatusOrGpuResourcesStatus(MpStatusOrGpuResources* status_or_gpu_resources);
+MP_CAPI_EXPORT extern MpGpuResources* MpStatusOrGpuResourcesConsumeValue(MpStatusOrGpuResources* status_or_gpu_resources);
 
 }  // extern "C"
 
