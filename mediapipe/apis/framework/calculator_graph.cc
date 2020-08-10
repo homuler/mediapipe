@@ -45,6 +45,10 @@ MpStatus* MpCalculatorGraphWaitUntilDone(MpCalculatorGraph* graph) {
 }
 
 #ifndef MEDIAPIPE_DISABLE_GPU
+MpGpuResources* MpCalculatorGraphGetGpuResources(MpCalculatorGraph* graph) {
+  return new MpGpuResources { graph->impl->GetGpuResources() };
+}
+
 MpStatus* MpCalculatorGraphSetGpuResources(MpCalculatorGraph* graph, MpGpuResources* gpu_resources) {
   return new MpStatus { graph->impl->SetGpuResources(gpu_resources->impl) };
 }

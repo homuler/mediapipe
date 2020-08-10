@@ -42,7 +42,6 @@ cc_library(
     srcs = ["gl_calculator_helper.cc"],
     hdrs = ["gl_calculator_helper.h"],
     deps = [
-        ":gpu_shared_data_internal",
         "//mediapipe/gpu:gl_calculator_helper",
         "//mediapipe/apis:common",
         "//mediapipe/apis/framework:packet",

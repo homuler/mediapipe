@@ -9,8 +9,8 @@ void MpGlCalculatorHelperDestroy(MpGlCalculatorHelper* gpu_helper) {
   delete gpu_helper;
 }
 
-void MpGlCalculatorHelperInitializeForTest(MpGlCalculatorHelper* gpu_helper, MpGpuResources* gpu_resources) {
-  gpu_helper->impl->InitializeForTest(gpu_resources->impl.get());
+void MpGlCalculatorHelperInitializeForTest(MpGlCalculatorHelper* gpu_helper, mediapipe::GpuResources* gpu_resources) {
+  gpu_helper->impl->InitializeForTest(gpu_resources);
 }
 
 MpStatus* MpGlCalculatorHelperRunInGlContext(MpGlCalculatorHelper* gpu_helper, MpGlStatusFunction* gl_func) {

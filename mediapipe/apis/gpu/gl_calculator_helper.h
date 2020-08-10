@@ -8,7 +8,6 @@
 #include "mediapipe/apis/framework/packet.h";
 #include "mediapipe/apis/framework/port/status.h";
 #include "mediapipe/apis/framework/port/statusor.h";
-#include "mediapipe/apis/gpu/gpu_shared_data_internal.h";
 
 extern "C" {
 
@@ -29,7 +28,7 @@ typedef MpStatus* MpGlStatusFunction();
 /** GlCalculatorHelper API */
 MP_CAPI_EXPORT extern MpGlCalculatorHelper* MpGlCalculatorHelperCreate();
 MP_CAPI_EXPORT extern void MpGlCalculatorHelperDestroy(MpGlCalculatorHelper* gpu_helper);
-MP_CAPI_EXPORT extern void MpGlCalculatorHelperInitializeForTest(MpGlCalculatorHelper* gpu_helper, MpGpuResources* gpu_resources);
+MP_CAPI_EXPORT extern void MpGlCalculatorHelperInitializeForTest(MpGlCalculatorHelper* gpu_helper, mediapipe::GpuResources* gpu_resources);
 MP_CAPI_EXPORT extern MpStatus* MpGlCalculatorHelperRunInGlContext(MpGlCalculatorHelper* gpu_helper, MpGlStatusFunction* gl_func);
 MP_CAPI_EXPORT extern mediapipe::GlTexture* MpGlCalculatorHelperCreateSourceTexture(
     MpGlCalculatorHelper* gpu_helper, mediapipe::ImageFrame* image_frame);
