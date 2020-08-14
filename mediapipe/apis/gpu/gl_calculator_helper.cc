@@ -23,8 +23,14 @@ MpStatus* MpGlCalculatorHelperRunInGlContext(MpGlCalculatorHelper* gpu_helper, M
   return new MpStatus { std::move(status) };
 }
 
-mediapipe::GlTexture* MpGlCalculatorHelperCreateSourceTexture(MpGlCalculatorHelper* gpu_helper, mediapipe::ImageFrame* image_frame) {
+mediapipe::GlTexture* MpGlCalculatorHelperCreateSourceTextureForImageFrame(
+    MpGlCalculatorHelper* gpu_helper, mediapipe::ImageFrame* image_frame) {
   return new mediapipe::GlTexture { gpu_helper->impl->CreateSourceTexture(*image_frame) };
+}
+
+mediapipe::GlTexture* MpGlCalculatorHelperCreateSourceTextureForGpuBuffer(
+    MpGlCalculatorHelper* gpu_helper, mediapipe::GpuBuffer* gpu_buffer) {
+  return new mediapipe::GlTexture { gpu_helper->impl->CreateSourceTexture(*gpu_buffer) };
 }
 
 void MpGlCalculatorHelperBindFramebuffer(MpGlCalculatorHelper* gpu_helper, mediapipe::GlTexture* gl_texture) {
@@ -32,37 +38,46 @@ void MpGlCalculatorHelperBindFramebuffer(MpGlCalculatorHelper* gpu_helper, media
 }
 
 void MpGlTextureDestroy(mediapipe::GlTexture* gl_texture) {
+  LOG(INFO) << "MpGlTextureDestroy";
   delete gl_texture;
 }
 
+int MpGlTextureWidth(mediapipe::GlTexture* gl_texture) {
+  return gl_texture->width();
+}
+
+int MpGlTextureHeight(mediapipe::GlTexture* gl_texture) {
+  return gl_texture->height();
+}
+
 void MpGlTextureRelease(mediapipe::GlTexture* gl_texture) {
+  LOG(INFO) << "MpGlTextureRelease";
   gl_texture->Release();
 }
 
-void MpGpuBufferDestroy(MpGpuBuffer* gpu_buffer) {
+void MpGpuBufferDestroy(mediapipe::GpuBuffer* gpu_buffer) {
+  LOG(INFO) << "MpGpuBufferDestroy";
   delete gpu_buffer;
 }
 
-uint32_t MpGpuBufferFormat(MpGpuBuffer* gpu_buffer) {
-  return static_cast<uint32_t>(gpu_buffer->impl->format());
+uint32_t MpGpuBufferFormat(mediapipe::GpuBuffer* gpu_buffer) {
+  return static_cast<uint32_t>(gpu_buffer->format());
 }
 
-int MpGpuBufferWidth(MpGpuBuffer* gpu_buffer) {
-  return gpu_buffer->impl->width();
+int MpGpuBufferWidth(mediapipe::GpuBuffer* gpu_buffer) {
+  return gpu_buffer->width();
 }
 
-int MpGpuBufferHeight(MpGpuBuffer* gpu_buffer) {
-  return gpu_buffer->impl->height();
+int MpGpuBufferHeight(mediapipe::GpuBuffer* gpu_buffer) {
+  return gpu_buffer->height();
 }
 
-MpGpuBuffer* MpGlTextureGetGpuBufferFrame(mediapipe::GlTexture* gl_texture) {
-  auto gpu_frame = gl_texture->GetFrame<mediapipe::GpuBuffer>();
-
-  return new MpGpuBuffer { std::move(gpu_frame) };
+mediapipe::GpuBuffer* MpGlTextureGetGpuBufferFrame(mediapipe::GlTexture* gl_texture) {
+  return gl_texture->GetFrame<mediapipe::GpuBuffer>().release();
 }
 
-MpPacket* MpMakeGpuBufferPacketAt(MpGpuBuffer* gpu_buffer, int timestamp) {
-  auto packet = mediapipe::Adopt(gpu_buffer->impl.get()).At(mediapipe::Timestamp(timestamp));
+MpPacket* MpMakeGpuBufferPacketAt(mediapipe::GpuBuffer* gpu_buffer, int timestamp) {
+  auto packet = mediapipe::Adopt(gpu_buffer).At(mediapipe::Timestamp(timestamp));
 
   return new MpPacket { std::move(packet) };
 }
@@ -74,6 +89,7 @@ MpStatusOrGpuBuffer* MpPacketConsumeGpuBuffer(MpPacket* packet) {
 }
 
 void MpStatusOrGpuBufferDestroy(MpStatusOrGpuBuffer* status_or_gpu_buffer) {
+  LOG(INFO) << "MpStatusOrGpuBufferDestroy";
   delete status_or_gpu_buffer;
 }
 
@@ -81,6 +97,6 @@ MpStatus* MpStatusOrGpuBufferStatus(MpStatusOrGpuBuffer* status_or_gpu_buffer) {
   return new MpStatus { *status_or_gpu_buffer->status };
 }
 
-MpGpuBuffer* MpStatusOrGpuBufferConsumeValue(MpStatusOrGpuBuffer* gpu_buffer) {
-  return new MpGpuBuffer { std::move(gpu_buffer->value) };
+mediapipe::GpuBuffer* MpStatusOrGpuBufferConsumeValue(MpStatusOrGpuBuffer* gpu_buffer) {
+  return gpu_buffer->value.release();
 }
