@@ -6,6 +6,10 @@ mediapipe::ImageFrame* MpImageFrameCreate(int format_code, int width, int height
   return new mediapipe::ImageFrame { format, width, height, alignment_boundary };
 }
 
+mediapipe::ImageFrame* MpImageFrameCreateDefault() {
+  return new mediapipe::ImageFrame();
+}
+
 mediapipe::ImageFrame* MpImageFrameCreateWithPixelData(
     int format_code, int width, int height, int width_step, uint8* pixel_data, Deleter deleter) {
   auto format = static_cast<mediapipe::ImageFormat::Format>(format_code);
@@ -45,8 +49,8 @@ int MpImageFrameWidthStep(mediapipe::ImageFrame* image_frame) {
   return image_frame->WidthStep();
 }
 
-const uint8* MpImageFramePixelData(mediapipe::ImageFrame* image_frame) {
-  return image_frame->PixelData();
+uint8* MpImageFramePixelData(mediapipe::ImageFrame* image_frame) {
+  return image_frame->MutablePixelData();
 }
 
 void MpStatusOrImageFrameDestroy(MpStatusOrImageFrame* status_or_image_frame) {
