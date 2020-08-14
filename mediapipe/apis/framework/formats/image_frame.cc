@@ -25,6 +25,10 @@ bool MpImageFrameIsEmpty(mediapipe::ImageFrame* image_frame) {
   return image_frame->IsEmpty();
 }
 
+int MpImageFrameFormat(mediapipe::ImageFrame* image_frame) {
+  return static_cast<int>(image_frame->Format());
+}
+
 int MpImageFrameWidth(mediapipe::ImageFrame* image_frame) {
   return image_frame->Width();
 }
