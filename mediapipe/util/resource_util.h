@@ -17,8 +17,11 @@
 
 #include <string>
 
+#include "absl/flags/declare.h"
 #include "mediapipe/framework/port/status.h"
 #include "mediapipe/framework/port/statusor.h"
+
+ABSL_DECLARE_FLAG(std::string, resource_root_dir);
 
 namespace mediapipe {
 

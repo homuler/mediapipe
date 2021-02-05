@@ -37,7 +37,12 @@ cc_binary(
         "//mediapipe/gpu:gpu_shared_data_internal",
     ],
     data = [
+        "//mediapipe/graphs/face_effect/data:facepaint.pngblob",
         "//mediapipe/graphs/face_effect/data:glasses.binarypb",
+        "//mediapipe/graphs/face_effect/data:glasses.pngblob",
+        "//mediapipe/graphs/face_effect:face_effect_gpu.binarypb",
+        "//mediapipe/modules/face_detection:face_detection_front.tflite",
         "//mediapipe/modules/face_geometry/data:geometry_pipeline_metadata.binarypb",
+        "//mediapipe/modules/face_landmark:face_landmark.tflite",
     ],
 )

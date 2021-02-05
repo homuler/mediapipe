@@ -16,6 +16,7 @@
 // This example requires a linux computer and a GPU with EGL support drivers.
 #include <cstdlib>
 
+#include "absl/flags/flag.h"
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/formats/image_frame.h"
 #include "mediapipe/framework/formats/image_frame_opencv.h"
@@ -29,6 +30,7 @@
 #include "mediapipe/gpu/gl_calculator_helper.h"
 #include "mediapipe/gpu/gpu_buffer.h"
 #include "mediapipe/gpu/gpu_shared_data_internal.h"
+#include "mediapipe/util/resource_util.h"
 
 constexpr char kInputStream[] = "input_video";
 constexpr char kOutputStream[] = "output_video";
@@ -47,6 +49,8 @@ DEFINE_string(face_effect, "facepaint",
               "If not provided, facepaint effect will be rendered");
 
 mediapipe::Status RunMPPGraph() {
+  absl::SetFlag(&FLAGS_resource_root_dir, "bazel-bin/mediapipe/examples/desktop/face_effect/face_effect_gpu.runfiles/mediapipe");
+
   std::string calculator_graph_config_contents;
   MP_RETURN_IF_ERROR(mediapipe::file::GetContents(
       kCalculatorGraphCOnfigFile, &calculator_graph_config_contents));
