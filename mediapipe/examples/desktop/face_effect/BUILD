@@ -22,6 +22,8 @@ cc_binary(
     srcs = ["demo_run_graph_main_gpu.cc"],
     deps = [
         "//mediapipe/graphs/face_effect:face_effect_gpu_deps",
+        # `demo_run_graph_main_gpu` dependencies
+        # see mediapipe/examples/desktop/BUILD
         "//mediapipe/framework:calculator_framework",
         "//mediapipe/framework/formats:image_frame",
         "//mediapipe/framework/formats:image_frame_opencv",
